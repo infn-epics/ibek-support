@@ -7,7 +7,7 @@
     - name: Add this module to the RELEASE.shell file for {{ module }}
       ansible.builtin.lineinfile:
         path: "{{ release_shell_file }}"
-        line: 'export {{ macro }}="{{ local_path | trim }}"'
+        line: 'export {{ macro }}="{{ local_path }}"'
         regexp: "export *{{ macro }} *=.*$"
         mode: "0644"
         create: true

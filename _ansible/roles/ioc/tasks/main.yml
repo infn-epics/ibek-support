@@ -45,6 +45,15 @@
     msg: "Schema build failed"
   when: schema_build.rc != 0
 
+# the old install.sh will add spaces in RELEASE.shell maco values when
+# mixed with ansible.sh usage (because ansible puts spaces in RELASE itself).
+# This tidies that up (TODO can be removed when install.sh is deprecated).
+- name: Fixup RELEASE.shell
+  ansible.builtin.replace:
+    replace: export \1=\2
+    regexp: 'export *([^=]*)=" +(.*)'
+    dest: "{{ configure_folder }}/RELEASE.shell"
+
 # Compile the IOC binary #######################################################
 
 - name: Compile the IOC binary
