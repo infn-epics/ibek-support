@@ -213,9 +213,7 @@ entity_models:
           Display precision (EGU)
         default: 6
 
-    post_init:
-      - value: |-
-          dbl
+    
     databases:
       # TODO as this is a simulation I have hard coded some of the DB fields,
       # but these could easily be made into arguments above
