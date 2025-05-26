@@ -1,0 +1,4 @@
+# yaml-language-server: $schema=../_scripts/support_install_variables.json
+
+module: pcas
+version: v4.13.3
