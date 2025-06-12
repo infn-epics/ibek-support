@@ -4,6 +4,7 @@ module: StreamDevice
 version: 2.8.26
 dbds:
   - stream-base.dbd
+  - calc.dbd
   - stream.dbd
 libs:
   - stream
@@ -17,7 +18,7 @@ apt_runtime:
   - libpcre3
 
 remove_macros:
-  - CALC
+   - CALC
 
 patch_lines:
   - path: "{{ config_linux_host }}"
