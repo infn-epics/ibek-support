@@ -2805,6 +2805,12 @@ entity_models:
           Maximum number threads
         default: 1
 
+      XMLSIZE:
+        type: int
+        description: |-
+          Number of elements of the ND attributes xml waveform record
+        default: 1024
+
     pre_init:
       - value: |
           # NDROIStatConfigure(portName, queueSize, blockingCallbacks,
@@ -2816,7 +2822,7 @@ entity_models:
         entity:
           type: ADCore.NDROIStatN
           P: "{{ P }}"
-          R: "{{ R }}{{ index + 1}}"
+          R: "{{ R }}{{ index + 1}}:"
           PORT: "{{ PORT }}"
           ADDR: "{{ index }}"
           TIMEOUT: "{{ TIMEOUT }}"
@@ -2835,6 +2841,7 @@ entity_models:
           R:
           TIMEOUT:
           SCANRATE:
+          XMLSIZE:
 
     pvi:
       yaml_path: NDROIStat.pvi.device.yaml
@@ -2937,9 +2944,9 @@ entity_models:
           TIMEOUT:
           PORT:
 
-  - name: NDPvaPlugin
+  - name: NDPvxsPlugin
     description: |-
-      This plugin makes NDArrays available through PVAccess
+      This plugin makes NDArrays available through PVAccess via PVXS
     parameters:
       P:
         type: str
@@ -3032,9 +3039,8 @@ entity_models:
 
     pre_init:
       - value: |
-          # NDPvaConfigure(portName, queueSize, blockingCallbacks, NDArrayPort, NDArrayAddr, pvName, maxBuffers, maxMemory, priority, stackSize)
-          NDPvaConfigure("{{PORT}}", {{QUEUE}}, {{BLOCK}}, "{{NDARRAY_PORT}}", {{NDARRAY_ADDR}}, {{PVNAME}}, 0, 0, {{PRIORITY}}, {{STACKSIZE}})
-          startPVAServer
+          # NDPvxsConfigure(portName, queueSize, blockingCallbacks, NDArrayPort, NDArrayAddr, pvName, maxBuffers, maxMemory, priority, stackSize)
+          NDPvxsConfigure("{{PORT}}", {{QUEUE}}, {{BLOCK}}, "{{NDARRAY_PORT}}", {{NDARRAY_ADDR}}, {{PVNAME}}, 0, 0, {{PRIORITY}}, {{STACKSIZE}})
 
     databases:
       - file: $(ADCORE)/db/NDPva.template
@@ -3050,7 +3056,7 @@ entity_models:
           PORT:
 
     pvi:
-      yaml_path: NDPva.pvi.device.yaml
+      yaml_path: NDPvxs.pvi.device.yaml
       ui_macros:
         P:
         R:
